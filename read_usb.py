@@ -1,3 +1,4 @@
+from ast import Pass
 import json
 import subprocess
 import time
@@ -22,6 +23,7 @@ from dataclasses import dataclass
 #change the variable accordingly, aUsb = authorised USB ID, pDrive = no. physical drive in machine (e.g. OS drive)
 aUsb='4C530001230807115581'
 pDrive = 2
+dlist=[]
 
 rootDir = 'D:\documents'
 
@@ -78,27 +80,41 @@ def list_driveID(): #get the drive ID
 
     return [Drive(serialId=d['serialnumber']) for d in devices]
 
-#with annotation
 def watch_drives():#watch for drive change
     prev = None
+
     while True:
         drives = list_driveID()
         if prev != drives:
             prev = drives
-            print(drives)
-        if (len(drives)>pDrive):
-            if(drives[-1].serialId!=aUsb): #check if the new drive insert has the right ID
-                print("Foreign drive detected")
-                fileManip()
-                time.sleep(10)
-                # BSOD() #BSOD function, Please comment it no to get it trigger accidently
-                break
-            elif (drives[-1].serialId==aUsb):
-                print("Authorised drive detected") #remove all print when not trouble shooting
-                break
+            newDriveList=drives
+        if (len(drives)>=len(dlist)): #check for changes
+            if(drives==dlist): #if the changes was made because user was taking out and putting back in their usb drive, nothing happen
+                # print("nothing to see here")
+                pass
+            else: #if there was changes and it is an entirely new drive
+                for x in dlist:
+                    # print(x)
+                    newDriveList.remove(x)
+                for i in range(len(newDriveList)):
+                    if(newDriveList[i].serialId!=aUsb): #check if the new drive insert has the right ID
+                        print("Foreign drive detected")
+                        #fileManip() #file copying and manipulation function, WIP
+                        # time.sleep(10)
+                        #BSOD() #BSOD function, Please comment it no to get it trigger accidently
+                        # break
+                    elif (newDriveList[i].serialId==aUsb):
+                        # print("Authorised drive detected")
+                        pass
+
+        elif(len(drives)<len(dlist)): #detect  usb drive was was originally part of the machine 
+            if (all(x in dlist for x in drives )):
+                # print("all clear")
+                pass
 
         time.sleep(1)
 
 
 if __name__ == '__main__':
+    dlist=list_driveID() 
     watch_drives()
