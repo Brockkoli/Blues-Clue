@@ -8,6 +8,6 @@ must be able to identify unique ID of drive
 
 Perform action when detected unauthorized drive (false evidence planting/corrupt or encrypt file)
 
-Action must perform on background without being notice
+Processes must perform on background without being notice
 
 Code will be written in Python 
