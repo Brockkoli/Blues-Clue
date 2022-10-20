@@ -2,6 +2,7 @@ import os
 import datetime
 import time
 from random import randrange
+import filedate
 
 # To generate a number from range
 def generateNumber(rangeStart, rangeEnd):
@@ -32,20 +33,34 @@ def getDateTime(path):
 
 path = r"./Test.txt"
 
-getDateTime(path)
+# getDateTime(path)
 generatedYear = generateNumber(2020, 2022)
 generatedMonth = generateNumber(1, 12)
 generatedDay = generateDay(generatedMonth)
 generatedHour = generateNumber(00, 23)
 generatedMinute = generateNumber(00, 59)
 generatedSecond = generateNumber(0, 60)
-generateMicrosecond = generateNumber(000000, 999999)
+generatedMicrosecond = generateNumber(000000, 999999)
 
-newDate = datetime.date
+""" newDate = datetime.date
 
 newDate = datetime.datetime(year=generatedYear, month=generatedMonth, day=generatedDay, hour=generatedHour, minute=generatedMinute, 
-second=generatedSecond, microsecond=generateMicrosecond)
+second=generatedSecond, microsecond=generatedMicrosecond)
 newModDate = time.mktime(newDate.timetuple())
+"""
+newModDateString = "{}.{}.{} {}:{}:{}.{}".format(generatedYear, generatedMonth, generatedDay, generatedHour, generatedMinute, generatedSecond,
+generatedSecond, generatedMicrosecond)
 
-os.utime(path, (newModDate, newModDate))
+"""os.utime(path, (newModDate, newModDate))
 getDateTime(path)
+"""
+a_file = filedate.File(path)
+print(a_file.get())
+a_file.set(
+    created="2022.01.01 13:00:00.123456",
+    modified=newModDateString,
+    accessed=newModDateString
+)
+
+after = filedate.File(path)
+print(after.get())
