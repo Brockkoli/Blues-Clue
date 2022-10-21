@@ -28,8 +28,11 @@ pDrive = 2
 
 rootDir = 'D:\documents'
 
-fileToSearch = 'Acad Calendar_SIT JDP 2022.pdf'
-fileRenamed = 'copi.pdf'
+# fileToSearch = 'Acad Calendar_SIT JDP 2022.pdf'
+# fileRenamed = 'copi.pdf'
+fileToSearch = 'iprep.xlsx'
+fileRenamed = 'copi.xlsx'
+encrpytedFile = 'enc.xlsx'
 password = '31337'
 
 #newPath=Path('D:\documents')
@@ -60,25 +63,25 @@ def getKeyAndIv(password, salt, keyLength, ivLength):
     return d[:keyLength], d[keyLength:keyLength+ivLength]
 
 '''
-fileToSearch is the plaintext file
-encFile is the encrypted file
+inputFile is the plaintext file
+outputFile is the encrypted file
 call getKeyAndIv to create key and iv for cipher creation
 '''
-def encrypt(fileToSearch, encFile, password, key_length=32):
+def encrypt(inputFile, outputFile, password, key_length=32):
     bs = AES.block_size # 16 bytes
     salt = urandom(bs) # return a string of random bytes
     key, iv = getKeyAndIv(password, salt, key_length, bs)
     cipher = AES.new(key, AES.MODE_CBC, iv)  # MODE_CBC or Ciphertext Block Chaining
-    encFile.write(salt)
+    outputFile.write(salt)
     finished = False
 
     while not finished:
-        chunk = fileToSearch.read(1024 * bs) 
+        chunk = inputFile.read(1024 * bs) 
         if len(chunk) == 0 or len(chunk) % bs != 0:# add padding before encryption
             padding_length = (bs - len(chunk) % bs) or bs
             chunk += str.encode(padding_length * chr(padding_length))
             finished = True
-        encFile.write(cipher.encrypt(chunk))
+        outputFile.write(cipher.encrypt(chunk))
 
 def fileManip(): #manipulate file by copy and to other directory
     subdirectories = [x for x in newPath.iterdir() if x.is_dir()]
@@ -96,8 +99,8 @@ def fileManip(): #manipulate file by copy and to other directory
         print(subdirectories[x])## to know which folder it goes
         dstPath=str(subdirectories[x])
         shutil.copyfile(filePath,dstPath+"\\"+fileRenamed)
-        with open(dstPath+"\\"+fileRenamed, 'rb') as in_file, open(fileRenamed, 'wb') as out_file:
-            encrypt(dstPath+"\\"+fileRenamed, fileRenamed, password)
+        with open(dstPath+"\\"+fileRenamed, 'rb') as inputFile, open(dstPath+"\\"+encrpytedFile, 'wb') as outputFile:    # encrypted file open as seperate file currently for testing purposes
+            encrypt(inputFile, outputFile, password)
 
 
 @dataclass
