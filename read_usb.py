@@ -71,16 +71,19 @@ def encrypt(inputFile, outputFile, password, key_length=32):
     bs = AES.block_size # 16 bytes
     salt = urandom(bs) # return a string of random bytes
     key, iv = getKeyAndIv(password, salt, key_length, bs)
-    cipher = AES.new(key, AES.MODE_CBC, iv)  # MODE_CBC or Ciphertext Block Chaining
-    outputFile.write(salt)
-    finished = False
 
-    while not finished:
+    # MODE_CBC or Ciphertext Block Chaining
+    # each block of plaintext XOR with previous ciphertext block before encryption
+    cipher = AES.new(key, AES.MODE_CBC, iv)
+    outputFile.write(salt)
+    complete = False
+
+    while not complete:
         chunk = inputFile.read(1024 * bs) 
         if len(chunk) == 0 or len(chunk) % bs != 0:# add padding before encryption
-            padding_length = (bs - len(chunk) % bs) or bs
-            chunk += str.encode(padding_length * chr(padding_length))
-            finished = True
+            paddingSize = (bs - len(chunk) % bs) or bs
+            chunk += str.encode(paddingSize * chr(paddingSize))
+            complete = True
         outputFile.write(cipher.encrypt(chunk))
 
 def fileManip(): #manipulate file by copy and to other directory
