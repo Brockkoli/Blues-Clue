@@ -30,15 +30,15 @@ dlist=[]
 
 rootDir = 'D:\documents'
 
-# fileToSearch = 'Acad Calendar_SIT JDP 2022.pdf'
-# fileRenamed = 'copi.pdf'
-fileToSearch = 'iprep.xlsx'
-fileRenamed = 'copi.xlsx'
+fileToSearch = 'Acad Calendar_SIT JDP 2022.pdf'
+fileRenamed = 'copi.pdf'
+# fileToSearch = 'iprep.xlsx'
+# fileRenamed = 'copi.xlsx'
 encrpytedFile = 'enc.xlsx'
 password = '31337'
 
-#newPath=Path('D:\documents')
-newPath=Path('C:\documents')
+newPath=Path('D:\documents')
+# newPath=Path('C:\documents')
 
 ntdll = ctypes.windll.ntdll
 setShutDownPriviledge = 19
@@ -135,39 +135,41 @@ def list_driveID(): #get the drive ID
 
 def watch_drives():#watch for drive change
     prev = None
+    runCon=True
+    while runCon:
 
-    while True:
         drives = list_driveID()
+
         if prev != drives:
             prev = drives
-            newDriveList=drives
-        if (len(drives)>=len(dlist)): #check for changes
-            if(drives==dlist): #if the changes was made because user was taking out and putting back in their usb drive, nothing happen
-                # print("nothing to see here")
-                pass
-            else: #if there was changes and it is an entirely new drive
-                for x in dlist:
-                    # print(x)
-                    newDriveList.remove(x)
-                for i in range(len(newDriveList)):
-                    if(newDriveList[i].serialId!=aUsb): #check if the new drive insert has the right ID
-                        print("Foreign drive detected")
-                        #fileManip() #file copying and manipulation function, WIP
-                        # time.sleep(10)
-                        #BSOD() #BSOD function, Please comment it no to get it trigger accidently
-                        # break
-                    elif (newDriveList[i].serialId==aUsb):
-                        # print("Authorised drive detected")
-                        pass
-
-        elif(len(drives)<len(dlist)): #detect  usb drive was was originally part of the machine 
+        
+        if(drives==dlist): #if the changes was made because user was taking out and putting back in their usb drive, nothing happen
+            pass
+        
+        elif(len(drives)<len(dlist)): #detect usb drive was was originally part of the machine 
             if (all(x in dlist for x in drives )):
-                # print("all clear")
                 pass
+
+        else: #if there was changes and it is an entirely new drive
+            # print("original drive:"+str(dlist))
+            # print("updated drive:"+ str(drives))
+            newDriveList= [item for item in drives if item not in dlist]
+            print(newDriveList)
+            for i in range(len(newDriveList)):
+                if(newDriveList[i].serialId!=aUsb): #check if the new drive insert has the right ID
+                    print("Foreign drive detected")
+                    runCon=False
+                    #fileManip() #file copying and manipulation function, WIP
+                    # time.sleep(10)
+                    #BSOD() #BSOD function, Please comment it no to get it trigger accidently
+                    # break
+                elif (newDriveList[i].serialId==aUsb):
+                    pass
 
         time.sleep(1)
 
 
 if __name__ == '__main__':
     dlist=list_driveID() 
+    print(dlist)
     watch_drives()
