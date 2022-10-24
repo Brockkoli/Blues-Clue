@@ -115,18 +115,9 @@ def meta_modification():
     generatedSecond = generateNumber(0, 60)
     generatedMicrosecond = generateNumber(000000, 999999)
 
-    """ newDate = datetime.date
-
-    newDate = datetime.datetime(year=generatedYear, month=generatedMonth, day=generatedDay, hour=generatedHour, minute=generatedMinute, 
-    second=generatedSecond, microsecond=generatedMicrosecond)
-    newModDate = time.mktime(newDate.timetuple())
-    """
     newModDateString = "{}.{}.{} {}:{}:{}.{}".format(generatedYear, generatedMonth, generatedDay, generatedHour, generatedMinute, generatedSecond,
     generatedSecond, generatedMicrosecond)
 
-    """os.utime(path, (newModDate, newModDate))
-    getDateTime(path)
-    """
     return newModDateString
 
 # To generate a number from range
