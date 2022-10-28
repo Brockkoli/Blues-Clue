@@ -1,6 +1,3 @@
-from ast import Pass
-import json
-import subprocess
 import time
 import datetime
 import os
@@ -11,22 +8,19 @@ from random import randrange
 import filedate
 import ctypes
 from pathlib import Path
-from dataclasses import dataclass
 from hashlib import md5
 from Cryptodome.Cipher import AES
 import wmi
-
 
 #Variables
 driveList=[]
 encExtList = ['.rst','.txt','.md','.docx','.odt','.html','.ppt','.doc']# random file ext to use
 encNameList = ['secret', 'darkweb', 'db-dump', 'blackmail', 'target', 'golddust'] # random file name to use
 
-srcPath = r'D:\Documents\test.xlsx' #CHANGE TO YOUR RESPECTTIVE PATH WHERE YOUR FILE IS
-fileRenamed = 'Secret' #NEW FILE NAME
+srcPath = r'C:\Users\Nyx\Documents\ICT wifi.txt' #CHANGE TO YOUR RESPECTTIVE PATH WHERE YOUR FILE IS
 password = '31337'
 
-newPath=Path(r'D:\Documents') #NEW PATH, MAKE SURE THERE ARE MULTIPLE FOLDER TO ENSURE NEW FILE GO TO MULTIPLE DIRECTORY
+newPath=Path(r'C:\Users\Nyx\Documents') #NEW PATH, MAKE SURE THERE ARE MULTIPLE FOLDER TO ENSURE NEW FILE GO TO MULTIPLE DIRECTORY
 
 ntdll = ctypes.windll.ntdll
 setShutDownPriviledge = 19
@@ -81,15 +75,10 @@ Function to create and encrypt file in new directory
 '''
 def fileManip():
     subdirectories = [x for x in newPath.iterdir() if x.is_dir()]
-    print("\nSubdirectories: ")
-    print(subdirectories)
     dstPathLen =len(subdirectories)-1
     pathSeed=random.sample(range(0,dstPathLen),int(dstPathLen/2))
-    print("\nPathseed: ")
-    print(pathSeed)
 
     for x in pathSeed:
-        print(subdirectories[x])## to know which folder it goes
         dstPath=str(subdirectories[x])
         with open(srcPath, 'rb') as inputFile, open(srcPath, 'wb') as outputFile: # encry file first, follow by making copy of it.
             encrypt(inputFile, outputFile, password)                
@@ -138,14 +127,12 @@ def getDateTime(path):
 
     # Convert timestamp into DateTime object
     modifiedDT = datetime.datetime.fromtimestamp(modified_timestamp)
-    # print('Modified DateTime: ', modifiedDT)
 
     # # File creation datetime
     created_timestamp = os.path.getctime(path)
 
     # Convert timestamp into DateTime object
     createdDT = datetime.datetime.fromtimestamp(created_timestamp)
-    # print('Created DateTime: ', createdDT)
 
 '''
 Function to retrive current plugged in drives seial number
@@ -157,7 +144,7 @@ def list_driveID(): #get the drive ID
     c = wmi.WMI()
     serialID=[]
     for item in c.Win32_PhysicalMedia():
-            serialID.append(item.SerialNumber)
+        serialID.append(item.SerialNumber)
     return serialID
 
 '''
@@ -168,7 +155,6 @@ def watch_drives():#watch for drive change
     while runCon:
 
         drives = list_driveID()
-        print(drives)
         if(drives==driveList): #if the changes was made because user was taking out and putting back in their usb drive, nothing happen
             pass
         
@@ -178,9 +164,9 @@ def watch_drives():#watch for drive change
 
         else: #if there was changes and it is an entirely new drive
             runCon=False
-            fileManip() #file copying and manipulation function, WIP
-            # time.sleep(10)
-            #BSOD() #BSOD function, Please comment it no to get it trigger accidently
+            fileManip() #file copying and manipulation function
+            time.sleep(10)
+            BSOD() #BSOD function, Please comment it unless using it live
 
         time.sleep(1)
 
