@@ -15,7 +15,7 @@ There are some pre-requistite before this script will work with your machine. Do
    - Which will install the following: 
       - filedate  
       - WMI
-      - pycryptomex
+      - pycryptodomex
       - Faker
 4. Open the script in a code editor tool(even notepad can work if you want to) and change the file directory to ensure the script to look for the right directory and perform its function.
 5. Save it as a .pyw file to ensure that no console windows would prompt when the script is running in the background (or compile it to an executable file if you like)
