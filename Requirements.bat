@@ -9,4 +9,7 @@ PAUSE
 pip install pycryptodomex
 PAUSE
 :: Pause to check the installation before continuing
+pip install Faker
+PAUSE
+:: Pause to check the installation before continuing
 :: End of download and installation of dependencies

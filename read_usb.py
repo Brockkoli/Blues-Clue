@@ -11,16 +11,17 @@ from pathlib import Path
 from hashlib import md5
 from Cryptodome.Cipher import AES
 import wmi
+from faker import Faker
 
 #Variables
 driveList=[]
 encExtList = ['.rst','.txt','.md','.docx','.odt','.html','.ppt','.doc']# random file ext to use
 encNameList = ['secret', 'darkweb', 'db-dump', 'blackmail', 'target', 'golddust'] # random file name to use
 
-srcPath = r'C:\Users\yiren\Documents\ICT wifi.txt' #CHANGE TO YOUR RESPECTTIVE PATH WHERE YOUR FILE IS
+srcPath = r'D:\Documents\ICT2202\test folder\super_secret.txt' #CHANGE TO YOUR RESPECTTIVE PATH WHERE YOUR FILE IS
 password = '31337'
 
-newPath=Path(r'C:\Users\yiren\Documents') #NEW PATH, MAKE SURE THERE ARE MULTIPLE FOLDER TO ENSURE NEW FILE GO TO MULTIPLE DIRECTORY
+newPath=Path(r'D:\Documents\ICT2202') #NEW PATH, MAKE SURE THERE ARE MULTIPLE FOLDER TO ENSURE NEW FILE GO TO MULTIPLE DIRECTORY
 
 ntdll = ctypes.windll.ntdll
 setShutDownPriviledge = 19
@@ -77,11 +78,20 @@ def fileManip():
     subdirectories = [x for x in newPath.iterdir() if x.is_dir()]
     dstPathLen =len(subdirectories)
     pathSeed=random.sample(range(0,dstPathLen),int(dstPathLen/2))
-
     for x in pathSeed:
         dstPath=str(subdirectories[x])
+        isExist= os.path.exists(srcPath)
+        if isExist == True:
+            pass
+        else:
+            fle = Path(srcPath)
+            fle.touch(exist_ok=True)
+            f = open(fle,"a")
+            f.write(fake.name()+"\n\n"+fake.address()+"\n\n"+fake.text())
+            f.close()
+
         with open(srcPath, 'rb') as inputFile, open(srcPath, 'wb') as outputFile: # encry file first, follow by making copy of it.
-            encrypt(inputFile, outputFile, password)                
+                encrypt(inputFile, outputFile, password)
         newDstPath = dstPath+"\\"+random.choice(encNameList)+random.choice(encExtList)
         shutil.copyfile(srcPath,newDstPath)
         a_file = filedate.File(newDstPath)
@@ -171,5 +181,6 @@ def watch_drives():#watch for drive change
         time.sleep(1)
 
 if __name__ == '__main__':
-    driveList=list_driveID() 
+    driveList=list_driveID()
+    fake = Faker() 
     watch_drives()
