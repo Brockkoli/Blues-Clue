@@ -9,13 +9,14 @@
 
 ## User Instruction Manual
 There are some pre-requistite before this script will work with your machine. Do follow the instruction to make sure that process goes through smoothly
-1. PC must be installed with Windows operating system (e.g. Windows 10, 11)
+1. PC must be installed with Windows operating system 8 onward
 2. Ensure machine is installed with Python version 3.0 onwards
 3. Run "Requirement.bat" to install the dependencies by entering the following in cmd.exe: `Requirement.bat`
    - Which will install the following: 
       - filedate  
       - WMI
       - pycryptomex
+      - Faker
 4. Open the script in a code editor tool(even notepad can work if you want to) and change the file directory to ensure the script to look for the right directory and perform its function.
 5. Save it as a .pyw file to ensure that no console windows would prompt when the script is running in the background (or compile it to an executable file if you like)
 6. Press `Win + R` , and you will see the Run prompt. Enter the following `shell:startup`![image](https://user-images.githubusercontent.com/24997390/197673717-8905ad4c-fb5f-4118-ac91-7dee69204a8f.png)
