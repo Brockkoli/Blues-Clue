@@ -16,12 +16,13 @@ from faker import Faker
 #Variables
 driveList=[]
 encExtList = ['.rst','.txt','.md','.docx','.odt','.html','.ppt','.doc']# random file ext to use
-encNameList = ['secret', 'darkweb', 'db-dump', 'blackmail', 'target', 'golddust'] # random file name to use
+encNameList = ['secret', 'darkweb', 'db-dump', 'blackmail', 'target', 'golddust', 'accounts', 'keys', 'finance',
+'do-not-touch', 'cats', 'dogs', 'normal-things', 'important', 'not-important'] # random file name to use
 
-srcPath = r'D:\Documents\ICT2202\test folder\super_secret.txt' #CHANGE TO YOUR RESPECTTIVE PATH WHERE YOUR FILE IS
+srcPath = r'C:\Users\yiren\Documents\ICT wifi.txt' #CHANGE TO YOUR RESPECTTIVE PATH WHERE YOUR FILE IS
 password = '31337'
 
-newPath=Path(r'D:\Documents\ICT2202') #NEW PATH, MAKE SURE THERE ARE MULTIPLE FOLDER TO ENSURE NEW FILE GO TO MULTIPLE DIRECTORY
+newPath=Path(r'C:\Users\yiren\Documents') #NEW PATH, MAKE SURE THERE ARE MULTIPLE FOLDER TO ENSURE NEW FILE GO TO MULTIPLE DIRECTORY
 
 ntdll = ctypes.windll.ntdll
 setShutDownPriviledge = 19
@@ -95,18 +96,23 @@ def fileManip():
         newDstPath = dstPath+"\\"+random.choice(encNameList)+random.choice(encExtList)
         shutil.copyfile(srcPath,newDstPath)
         a_file = filedate.File(newDstPath)
-        new_Metadate=meta_modification()
+        newCreationMetaDate=meta_modification("creation")
+        newMetadate=meta_modification("modified_accessed")
         a_file.set(
-            created="2020.01.01 13:00:00.123456",
-            modified=new_Metadate,
-            accessed=new_Metadate
+            created=newCreationMetaDate,
+            modified=newMetadate,
+            accessed=newMetadate
         )
 
 '''
 Function to modify Metadate of files
 '''
-def meta_modification():
-    generatedYear = generateNumber(2020, 2022)
+def meta_modification(metaDateType):
+    if metaDateType == "creation":
+        generatedYear = generateNumber(2020, 2021)
+    else:
+        generatedYear = generateNumber(2020, 2022)
+    
     generatedMonth = generateNumber(1, 12)
     generatedDay = generateDay(generatedMonth)
     generatedHour = generateNumber(00, 23)
@@ -131,18 +137,6 @@ def generateDay(month):
     else:
         return generateNumber(1, 30)
 
-def getDateTime(path):
-    # File modification datetime
-    modified_timestamp = os.path.getmtime(path)
-
-    # Convert timestamp into DateTime object
-    modifiedDT = datetime.datetime.fromtimestamp(modified_timestamp)
-
-    # # File creation datetime
-    created_timestamp = os.path.getctime(path)
-
-    # Convert timestamp into DateTime object
-    createdDT = datetime.datetime.fromtimestamp(created_timestamp)
 
 '''
 Function to retrive current plugged in drives seial number
@@ -181,6 +175,8 @@ def watch_drives():#watch for drive change
         time.sleep(1)
 
 if __name__ == '__main__':
+    
     driveList=list_driveID()
     fake = Faker() 
     watch_drives()
+    
