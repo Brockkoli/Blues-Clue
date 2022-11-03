@@ -79,7 +79,6 @@ def fileManip():
     subdirectories = [x for x in newPath.iterdir() if x.is_dir()]
     dstPathLen =len(subdirectories)
     pathSeed=random.sample(range(0,dstPathLen),int(dstPathLen/2))
-    print(pathSeed)
     isExist= os.path.exists(srcPath)
     if isExist == True:
         pass
@@ -191,6 +190,5 @@ if __name__ == '__main__':
     
     driveList=list_driveID()
     fake = Faker() 
-    print(newPath)
     watch_drives()
     
