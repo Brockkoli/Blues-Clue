@@ -7,6 +7,8 @@
 - Processes must perform on background without being notice
 - Code will be written in Python 
 
+---
+
 ## User Instruction Manual
 There are some pre-requistite before this script will work with your machine. Do follow the instruction to make sure that process goes through smoothly
 1. PC must be installed with Windows operating system 8 onward
@@ -22,3 +24,23 @@ There are some pre-requistite before this script will work with your machine. Do
 6. Press `Win + R` , and you will see the Run prompt. Enter the following `shell:startup`![image](https://user-images.githubusercontent.com/24997390/197673717-8905ad4c-fb5f-4118-ac91-7dee69204a8f.png)
 7. Press `OK` and a new winow will be open, just drag the .pyw script into it.![image](https://user-images.githubusercontent.com/24997390/197674255-8bd3ddf4-fc8b-4738-bf0a-81111499476a.png)
 8. Restart your PC and it should running in the background
+
+---
+
+### Upon Installation
+Do **NOT** attempt plug in any USB drives into the computer upon the installation of the program. Whitelisting of USB devices are done on startup of the program. As this is a program that is supposed to run the backend, hence there is no GUI for manual whitelisting of USB drives. 
+
+---
+
+### To whitelist USB 
+#### Whitelist upon installation
+1. Make sure that the program is added to run on startup
+2. Shutdown the computer
+3. Plug in the desired USB drive
+4. Power on the computer
+5. The USB device is now whitelisted, it can be removed and plugged backed into the computer for use!
+
+#### Whitelist upon startup
+1. Make sure that the USB device is plugged into the computer before powering on
+2. Turn on the computer
+3. The USB device is now whitelisted, it can be removed and plugged backed into the computer for use!
