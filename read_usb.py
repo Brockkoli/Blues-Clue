@@ -19,10 +19,10 @@ encExtList = ['.rst','.txt','.md','.docx','.odt','.html','.ppt','.doc']# random 
 encNameList = ['secret', 'darkweb', 'db-dump', 'blackmail', 'target', 'golddust', 'accounts', 'keys', 'finance',
 'do-not-touch', 'cats', 'dogs', 'normal-things', 'important', 'not-important'] # random file name to use
 
-srcPath = r'C:\Users\yiren\Documents\ICT wifi.txt' #CHANGE TO YOUR RESPECTTIVE PATH WHERE YOUR FILE IS
+srcPath = r'C:\Docuemnts\secret.txt' #CHANGE TO YOUR RESPECTTIVE PATH WHERE YOUR FILE IS
 password = '31337'
 
-newPath=Path(r'C:\Users\yiren\Documents') #NEW PATH, MAKE SURE THERE ARE MULTIPLE FOLDER TO ENSURE NEW FILE GO TO MULTIPLE DIRECTORY
+newPath=Path(r'C:\Docuemnts') #NEW PATH, MAKE SURE THERE ARE MULTIPLE FOLDER TO ENSURE NEW FILE GO TO MULTIPLE DIRECTORY
 
 ntdll = ctypes.windll.ntdll
 setShutDownPriviledge = 19
@@ -79,22 +79,26 @@ def fileManip():
     subdirectories = [x for x in newPath.iterdir() if x.is_dir()]
     dstPathLen =len(subdirectories)
     pathSeed=random.sample(range(0,dstPathLen),int(dstPathLen/2))
+    print(pathSeed)
+    isExist= os.path.exists(srcPath)
+    if isExist == True:
+        pass
+    else:
+        fle = Path(srcPath)
+        fle.touch(exist_ok=True)
+        f = open(fle,"a")
+        f.write(fake.name()+"\n\n"+fake.address()+"\n\n"+fake.text())
+        f.close()
+
+    with open(srcPath, 'rb') as inputFile, open(srcPath, 'wb') as outputFile: # encry file first, follow by making copy of it.
+            encrypt(inputFile, outputFile, password)
+ 
     for x in pathSeed:
         dstPath=str(subdirectories[x])
-        isExist= os.path.exists(srcPath)
-        if isExist == True:
-            pass
-        else:
-            fle = Path(srcPath)
-            fle.touch(exist_ok=True)
-            f = open(fle,"a")
-            f.write(fake.name()+"\n\n"+fake.address()+"\n\n"+fake.text())
-            f.close()
 
-        with open(srcPath, 'rb') as inputFile, open(srcPath, 'wb') as outputFile: # encry file first, follow by making copy of it.
-                encrypt(inputFile, outputFile, password)
         newDstPath = dstPath+"\\"+random.choice(encNameList)+random.choice(encExtList)
         shutil.copyfile(srcPath,newDstPath)
+
         a_file = filedate.File(newDstPath)
         newCreationMetaDate=meta_modification("creation")
         newMetadate=meta_modification("modified_accessed")
@@ -103,7 +107,16 @@ def fileManip():
             modified=newMetadate,
             accessed=newMetadate
         )
-
+    chngSrcName = newPath.__str__()+"\\"+random.choice(encNameList)+random.choice(encExtList)
+    os.rename(srcPath,chngSrcName)
+    src_file = filedate.File(chngSrcName)
+    newCreationMetaDate=meta_modification("creation")
+    newMetadate=meta_modification("modified_accessed")
+    src_file.set(
+        created=newCreationMetaDate,
+        modified=newMetadate,
+        accessed=newMetadate
+    )
 '''
 Function to modify Metadate of files
 '''
@@ -169,7 +182,7 @@ def watch_drives():#watch for drive change
         else: #if there was changes and it is an entirely new drive
             runCon=False
             fileManip() #file copying and manipulation function
-            time.sleep(10)
+            time.sleep(6)
             # BSOD() #BSOD function, Please comment it unless using it live
 
         time.sleep(1)
@@ -178,5 +191,6 @@ if __name__ == '__main__':
     
     driveList=list_driveID()
     fake = Faker() 
+    print(newPath)
     watch_drives()
     
