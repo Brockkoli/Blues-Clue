@@ -19,16 +19,16 @@ There are some pre-requistite before this script will work with your machine. Do
       - WMI
       - pycryptodomex
       - Faker
-4. Open the script in a code editor tool(even notepad can work if you want to) and change the file directory to ensure the script to look for the right directory and perform its function.
-5. Save it as a .pyw file to ensure that no console windows would prompt when the script is running in the background (or compile it to an executable file if you like)
+4. Open the script in a code editor tool (even notepad can work if you want to) and change the file directory to ensure the script to look for the right directory and perform its function.
+5. Save it as a .pyw file to ensure that no console windows would prompt when the script is running in the background (or compile it to an executable file)
 6. Press `Win + R` , and you will see the Run prompt. Enter the following `shell:startup`![image](https://user-images.githubusercontent.com/24997390/197673717-8905ad4c-fb5f-4118-ac91-7dee69204a8f.png)
 7. Press `OK` and a new winow will be open, just drag the .pyw script into it.![image](https://user-images.githubusercontent.com/24997390/197674255-8bd3ddf4-fc8b-4738-bf0a-81111499476a.png)
-8. Restart your PC and it should running in the background
+8. Restart your PC and the program should be running in the background
 
 ---
 
 ### Upon Installation
-Do **NOT** attempt plug in any USB drives into the computer upon the installation of the program. Whitelisting of USB devices are done on startup of the program. As this is a program that is supposed to run the backend, hence there is no GUI for manual whitelisting of USB drives. 
+Do **NOT** attempt to plug in any USB drives into the computer upon the installation of the program. Whitelisting of USB devices are done on startup of the program. As this is a program that is supposed to run in the background, hence there is no GUI for manual whitelisting of USB drives. 
 
 ---
 
