@@ -1,4 +1,4 @@
-# ICT2202- Anti-forensic tool
+# ICT2202- Team Zero1's Anti-forensic tool
 
 - PC detect usb drive and encrpyt file + Generate false evidence
 - Must be able to detect Usb drive
