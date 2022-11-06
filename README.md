@@ -13,7 +13,7 @@
 There are some pre-requistite before this script will work with your machine. Do follow the instruction to make sure that process goes through smoothly
 1. PC must be installed with Windows operating system 8 onward
 2. Ensure machine is installed with Python version 3.0 onwards
-3. Run "Requirement.bat" to install the dependencies by entering the following in cmd.exe: `Requirement.bat`
+3. Run "Requirements.bat" to install the dependencies by entering the following in cmd.exe: `Requirements.bat`
    - Which will install the following: 
       - filedate  
       - WMI
