@@ -1,3 +1,10 @@
+'''
+Course: ICT2202 Digital Forensics
+Lab: P5
+Team: zero1
+Anti-forensics tool name: Blue's Clue
+'''
+
 import time
 import datetime
 import os
