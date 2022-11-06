@@ -1,5 +1,5 @@
 # ICT2202- Team Zero1's Anti-forensic tool
-##Solution name: Blue's clue
+## Solution name: Blue's clue
 - PC detect usb drive and encrpyt file + Generate false evidence
 - Must be able to detect Usb drive
 - Must be able to identify unique ID of drive
