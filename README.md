@@ -46,5 +46,5 @@ Do **NOT** attempt to plug in any USB drives into the computer upon the installa
 3. The USB device is now whitelisted, it can be removed and plugged backed into the computer for use!
 
 #### Set your file source and destination
-1. Under srcPath varaible,  just change it to where your file is located. A text file will be created if the file you have stated doesn't exist!
-2. For the destination, just chage newPath variable to a folder with multiple sub-folders, do have more than 4 sub-folder if possible!
+1. Under `srcPath` varaible,  just change it to where your file is located. A text file will be created if the file you have stated doesn't exist!
+2. For the destination, just chage `newPath` variable to a folder with multiple sub-folders, do have more than 4 sub-folder if possible!
