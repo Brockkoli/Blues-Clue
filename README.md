@@ -4,7 +4,7 @@
 - Must be able to detect Usb drive
 - Must be able to identify unique ID of drive
 - Perform action when detected unauthorized drive (false evidence planting/corrupt or encrypt file)
-- Processes must perform on background without being notice
+- Processes must perform on background without being notice (do not have any prompt)
 - Code will be written in Python 
 
 ---
@@ -44,3 +44,7 @@ Do **NOT** attempt to plug in any USB drives into the computer upon the installa
 1. Make sure that the USB device is plugged into the computer before powering on
 2. Turn on the computer
 3. The USB device is now whitelisted, it can be removed and plugged backed into the computer for use!
+
+#### Set your file source and destination
+1. Under srcPath varaible,  just change it to where your file is located. A text file will be created if the file you have stated doesn't exist!
+2. For the destination, just chage newPath variable to a folder with multiple sub-folders, do have more than 4 sub-folder if possible!
