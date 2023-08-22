@@ -1,4 +1,11 @@
 # ICT2202- Team Zero1's Anti-forensic tool
+
+Blue's clue is a proof-of-concept anti-forensics tool to covertly delay the digital forensics investigation using various disruptive/manipulative features.
+> **Note:** This is an assignment project for  **ICT 2202 Digital Forensics** 
+
+> Singapore Institute of Technology Bachelor of Engineering with Honours in Information and Communications Technology majoring in Information Security
+##  Usage
+
 ## Solution name: Blue's clue
 - PC detect usb drive and encrpyt file + Generate false evidence
 - Must be able to detect Usb drive
