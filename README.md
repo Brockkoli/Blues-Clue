@@ -1,6 +1,6 @@
 # ICT2202- Team Zero1's Anti-forensic tool
 
-Blue's clue is a proof-of-concept anti-forensics tool to covertly delay the digital forensics investigation using various disruptive/manipulative features.
+Blue's clue is a proof-of-concept anti-forensics tool to covertly delay the digital forensics investigation using various disruptive and manipulative features.
 > **Note:** This is an assignment project for  **ICT 2202 Digital Forensics** 
 
 > Singapore Institute of Technology Bachelor of Engineering with Honours in Information and Communications Technology majoring in Information Security
